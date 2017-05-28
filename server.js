@@ -35,6 +35,26 @@ var rooms = {};
 var sockets = [];
 var chatHistory = {};
 
+
+function findClientsSocket(roomId, namespace) {
+    var res = []
+        // the default namespace is "/"
+        , ns = io.of(namespace ||"/");
+
+    if (ns) {
+        for (var id in ns.connected) {
+            if(roomId) {
+                var index = ns.connected[id].rooms.indexOf(roomId);
+                if(index !== -1) {
+                    res.push(ns.connected[id]);
+                }
+            } else {
+                res.push(ns.connected[id]);
+            }
+        }
+    }
+    return res;
+}
 function purge(s, action) {
 	/*
 	 The action will determine how we deal with the room/user removal.
@@ -247,7 +267,7 @@ io.sockets.on("connection", function (socket) {
         var whisperStr = msg.split(":");
         var found = false;
         if (whisper) {
-            var whisperTo = whisperStr[1];
+            var whisperTo = sanitize.escape(whisperStr[1]);
             var keys = Object.keys(people);
             if (keys.length != 0) {
                 for (var i = 0; i<keys.length; i++) {
@@ -264,19 +284,22 @@ io.sockets.on("connection", function (socket) {
             if (found && socket.id !== whisperId) {
                 var whisperTo = sanitize.escape(whisperStr[1]);
                 var whisperMsg = sanitize.escape(whisperStr[2]);
-                socket.emit("whisper", {name: "You"}, whisperMsg);
-                io.sockets.socket(whisperId).emit("whisper", msTime, people[socket.id], whisperMsg);
+                socket.emit("whisper", msTime, {name: "You ", to: people[whisperId].name}, whisperMsg);
+                io.sockets.connected[whisperId].emit("whisper", msTime, people[socket.id], whisperMsg);
             } else {
                 socket.emit("update", "Can't find " + whisperTo);
             }
         } else {
-            if (io.sockets.manager.roomClients[socket.id]['/'+socket.room] !== undefined ) {
+            //console.log('loggit', io.sockets.adapter.rooms[socket.room], socket.id);
+            if (io.sockets.adapter.rooms[socket.room] != undefined) {
                 io.sockets.in(socket.room).emit("chat", msTime, people[socket.id], sanitize.escape(msg));
                 socket.emit("isTyping", false);
                 if (_.size(chatHistory[socket.room]) > 10) {
                     chatHistory[socket.room].splice(0,1);
                 } else {
-                    chatHistory[socket.room].push(people[socket.id].name + ": " + sanitize.escape(msg));
+                    if(chatHistory[socket.room] != undefined){
+                        chatHistory[socket.room].push(people[socket.id].name + ": " + sanitize.escape(msg));
+                    }
                 }
             } else {
                 socket.emit("update", "Please connect to a room.");
