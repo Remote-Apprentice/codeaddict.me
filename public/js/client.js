@@ -232,6 +232,7 @@ $(document).ready(function() {
                     socket.emit("createRoom", roomName);
                     $("#errors").empty();
                     $("#errors").hide();
+                    $("#codeForm").show();
                 }
             }
         });
@@ -240,7 +241,11 @@ $(document).ready(function() {
     $("#rooms").on('click', '.joinRoomBtn', function() {
         var roomName = $(this).siblings("span").text();
         var roomID = $(this).attr("id");
-        socket.emit("joinRoom", roomID);
+        if(socket.room == undefined){
+            socket.emit("joinRoom", roomID);
+            $("#codeForm").show();
+        }
+
     });
 
     $("#rooms").on('click', '.removeRoomBtn', function() {
@@ -248,12 +253,14 @@ $(document).ready(function() {
         var roomID = $(this).attr("id");
         socket.emit("removeRoom", roomID);
         $("#createRoom").show();
+        $("#codeForm").hide();
     });
 
     $("#leave").click(function() {
         var roomID = myRoomID;
         socket.emit("leaveRoom", roomID);
         $("#createRoom").show();
+        $("#codeForm").hide();
     });
 
     $("#people").on('click', '.whisper', function() {
