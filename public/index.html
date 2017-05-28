@@ -49,13 +49,13 @@
     </form>
   </div>
 </div>
-
+<div class="container-fluid">
 <div class="row" id="main-chat-screen">
-  <div class="col-md-3">
+  <div class="col-md-2">
     <ul id="rooms" class="list-group"></ul>
     <ul id="people" class="list-group"></ul>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <div id="conversation">
       <ul id="msgs" class="list-unstyled"></ul>
     </div>
@@ -64,7 +64,6 @@
         <input type="text" class="form-control input-lg" placeholder="Your message" id="msg">
       </div>
       <input type="submit" name="send" id="send" value="Send" class="btn btn-success btn-lg">
-      <input type="button" name="start_button" id="start_button" value="Record" onclick="startButton(event)" class="btn btn-info btn-lg">
       <div class="btn-group">
         <button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" >
           Actions <span class="caret"></span>
@@ -77,43 +76,46 @@
       </div>
     </form>
   </div>
-  <div class="col-md-2">
-    <ul class="list-unstyled" id="updates"></ul>
+  <div class="col-md-6">
+
+    <form id="codeForm">
+      <select name="idLanguage" id="mode">
+        <option value="javascript">javaScript</option>
+        <option value="python">python</option>
+
+        <option value="ruby">ruby</option>
+        <option value="clojure">clojure</option>
+        <option value="clike">clike</option>
+        <option value="css">css</option>
+        <option value="markdown">markdown</option>
+        <option value="htmlmixed">htmlmixed</option>
+        <option value="xml">xml</option>
+
+      </select>
+      <select name="idTheme" id="theme">
+        <option value="vibrant-ink">vibrant-ink</option>
+        <option value="3024-day">3024-day</option>
+        <option value="3024-night">3024-night</option>
+        <option value="eclipse">eclipse</option>
+        <option value="monokai">monokai</option>
+        <option value="midnight">midnight</option>
+        <option value="night">night</option>
+        <option value="railscasts">railscasts</option>
+        <option value="solarized">solarized</option>
+        <option value="ambiance">ambiance</option>
+
+      </select>
+      <textarea title="code" id="code"></textarea>
+    </form>
+    <div class="row">
+      <div class="col-md-6">
+        <iframe id=preview></iframe>
+      </div>
+    </div>
   </div>
 </div>
-<div class="row">
 
-  <form id="codeForm">
-    <select name="idLanguage" id="mode">
-      <option value="javascript">javaScript</option>
-      <option value="python">python</option>
-
-      <option value="ruby">ruby</option>
-      <option value="clojure">clojure</option>
-      <option value="clike">clike</option>
-      <option value="css">css</option>
-      <option value="markdown">markdown</option>
-      <option value="htmlmixed">htmlmixed</option>
-      <option value="xml">xml</option>
-
-    </select>
-    <select name="idTheme" id="theme">
-      <option value="vibrant-ink">vibrant-ink</option>
-      <option value="3024-day">3024-day</option>
-      <option value="3024-night">3024-night</option>
-      <option value="eclipse">eclipse</option>
-      <option value="monokai">monokai</option>
-      <option value="midnight">midnight</option>
-      <option value="night">night</option>
-      <option value="railscasts">railscasts</option>
-      <option value="solarized">solarized</option>
-      <option value="ambiance">ambiance</option>
-
-    </select>
-    <textarea title="code" id="code"></textarea>
-  </form>
 </div>
-
 <!-- Modal start -->
 <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -134,7 +136,9 @@
   </div>
 </div>
 <!-- Modal end -->
-
+<div class="col-md-2">
+  <ul class="list-unstyled" id="updates"></ul>
+</div>
 <script src="components/jquery/dist/jquery.js"></script>
 <script src="components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/socket.io/socket.io.js"></script>

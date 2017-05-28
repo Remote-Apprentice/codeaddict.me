@@ -2,22 +2,7 @@
  - GeoLocation
  - WebSpeech
  */
-var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-    mode: 'javascript',
-    lineNumbers: true,
-    lineWrapping: true,
-    autoCloseTags: true,
-    styleActiveLine: true,
-    autoCloseBrackets: true,
-    theme: "vibrant-ink"
-});
 
-$('#mode').change(function(){
-    editor.setOption("mode", $(this).val() );
-});
-$('#theme').change(function(){
-    editor.setOption("theme", $(this).val() );
-});
 
 //WebSpeech API
 var final_transcript = '';
@@ -99,7 +84,36 @@ $(document).ready(function() {
     //setup "global" variables first
     var socket = io.connect();
     var myRoomID = null;
+    var delay;
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: 'javascript',
+        lineNumbers: true,
+        lineWrapping: true,
+        autoCloseTags: true,
+        styleActiveLine: true,
+        autoCloseBrackets: true,
+        theme: "vibrant-ink"
+    });
 
+    $('#mode').change(function(){
+        editor.setOption("mode", $(this).val() );
+
+        if(editor.getMode().name == 'htmlmixed'){
+            $('iframe').show();
+        }
+    });
+    $('#theme').change(function(){
+        editor.setOption("theme", $(this).val() );
+    });
+
+    function updatePreview() {
+        var previewFrame = document.getElementById('preview');
+        var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
+        preview.open();
+        preview.write(editor.getValue());
+        preview.close();
+    }
+    setTimeout(updatePreview, 300);
     $("form").submit(function(event) {
         event.preventDefault();
     });
@@ -329,6 +343,11 @@ $(document).ready(function() {
         console.log(op);
         socket.emit('change', op);
         socket.emit('refresh', editor.getValue());
+        if(editor.getMode().name == 'htmlmixed'){
+            clearTimeout(delay);
+            delay = setTimeout(updatePreview, 300);
+        }
+
     });
     socket.on("exists", function(data) {
         $("#errors").empty();
