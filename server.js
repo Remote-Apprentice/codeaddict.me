@@ -9,8 +9,8 @@ var sanitize = require('validator');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 4200);
-app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+app.set('port',  4200);
+app.set('ipaddr', "127.0.0.1");
 app.use(bodyParser());
 app.use(methodOverride());
 app.use(express.static(__dirname + '/public'));

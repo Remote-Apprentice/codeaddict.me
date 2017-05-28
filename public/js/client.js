@@ -97,7 +97,7 @@ function timeFormat(msTime) {
 
 $(document).ready(function() {
     //setup "global" variables first
-    var socket = io.connect("codeaddict.me");
+    var socket = io.connect();
     var myRoomID = null;
 
     $("form").submit(function(event) {
