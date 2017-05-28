@@ -44,13 +44,3 @@ To install <code>npm install && bower install</code> and to launch run <code>npm
 
 To send a 'private' message, use the following format in the chat message input box:
 <code>w:USERNAME:MESSAGE</code> (where 'USERNAME' is the exact name of the user who you wish to whisper to (case-sensitive). For your convenience you can use the whipser link next to the person's username on the left hand side.)
-
-New up to date post: http://tamas.io/further-additions-to-the-node-jssocket-io-chat-app/
-
-Previous articles related to this topic:
-<ul>
-  <li>http://tamas.io/node-jssocket-io-chat-app-with-geolocation-and-user-agent-support/</li>
-  <li>http://tamas.io/chat-2-0-supercharged-chat-written-in-node-js-and-socket-io/</li>
-  <li>http://tamas.io/simple-chat-application-using-node-js-and-socket-io/</li>
-  <li>http://tamas.io/advanced-chat-using-node-js-and-socket-io-episode-1/</li>
-</ul>
