@@ -2,7 +2,6 @@ var express = require('express')
     , app = express()
     , server = require('http').createServer(app)
     , io = require("socket.io").listen(server)
-    , npid = require("npid")
     , uuid = require('node-uuid')
     , Room = require('./room.js')
     , _ = require('underscore')._;
@@ -10,7 +9,7 @@ var sanitize = require('validator');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 3000);
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 4200);
 app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
 app.use(bodyParser());
 app.use(methodOverride());
@@ -21,13 +20,6 @@ app.use('/icons', express.static(__dirname + '/icons'));
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 
-	/* Store process-id (as priviledged user) */
-    try {
-        npid.create('/var/run/advanced-chat.pid', true);
-    } catch (err) {
-        console.log(err);
-        //process.exit(1);
-    }
 
 app.get('/', function(req, res) {
     res.render('index.html');
