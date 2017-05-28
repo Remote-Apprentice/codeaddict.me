@@ -1,84 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Chat 2.0</title>
+  <title>CodeAddict</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Language" content="en-us">
+  <link rel="stylesheet" href="https://codemirror.net/lib/codemirror.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/ambiance.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/3024-day.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/3024-night.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/eclipse.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/monokai.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/midnight.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/night.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/railscasts.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/solarized.css">
+  <link rel="stylesheet" href="https://codemirror.net/theme/vibrant-ink.css">
+
+  <script src="https://codemirror.net/lib/codemirror.js"></script>
+  <script src="https://codemirror.net/addon/mode/overlay.js"></script>
+  <script src="https://codemirror.net/mode/xml/xml.js"></script>
+  <script src="https://codemirror.net/mode/markdown/markdown.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/addon/edit/closebrackets.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/addon/edit/closetag.js"></script>
+  <script src="https://codemirror.net/mode/javascript/javascript.js"></script>
+  <script src="https://codemirror.net/mode/css/css.js"></script>
+  <script src="https://codemirror.net/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="https://codemirror.net/mode/clike/clike.js"></script>
+  <script src="https://codemirror.net/mode/clojure/clojure.js"></script>
+  <script src="https://codemirror.net/mode/ruby/ruby.js"></script>
+  <script src="https://codemirror.net/mode/python/python.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/addon/selection/active-line.js"></script>
   <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="components/font-awesome/css/font-awesome.css">
-  <link rel="stylesheet" href="css/flags.css">
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-  <div class="main col-md-6 col-md-offset-3">
-    <div class="alert alert-danger" id="errors"></div>
-    <div id="login-screen">
-      <p class="lead">Chat application - using node.js and socket.io</p>
-      <p>Please enter your name below and click 'Join' or hit the 'Enter' key.</p>
-        <form class="form-inline" id="nameForm">
-          <div class="form-group">
-            <input type="text" class="form-control input-lg" placeholder="Your name" id="name">
-          </div>
-          <input type="submit" name="join" id="join" value="Join" class="btn btn-primary btn-lg">
-        </form>
+<div class="main col-md-6 col-md-offset-3">
+  <div class="alert alert-danger" id="errors"></div>
+  <div id="login-screen">
+    <p class="lead">Enter CodeAddict.me</p>
+    <p>Please enter your name below and click 'Join' or hit the 'Enter' key.</p>
+    <form class="form-inline" id="nameForm">
+      <div class="form-group">
+        <input type="text" class="form-control input-lg" placeholder="Your name" id="name">
       </div>
-    </div>
+      <input type="submit" name="join" id="join" value="Join" class="btn btn-primary btn-lg">
+    </form>
+  </div>
+</div>
 
-    <div class="row" id="main-chat-screen">
-      <div class="col-md-3">
-        <ul id="rooms" class="list-group"></ul>
-        <ul id="people" class="list-group"></ul>
+<div class="row" id="main-chat-screen">
+  <div class="col-md-3">
+    <ul id="rooms" class="list-group"></ul>
+    <ul id="people" class="list-group"></ul>
+  </div>
+  <div class="col-md-6">
+    <div id="conversation">
+      <ul id="msgs" class="list-unstyled"></ul>
+    </div>
+    <form id="chatForm" class="form-inline">
+      <div class="form-group">
+        <input type="text" class="form-control input-lg" placeholder="Your message" id="msg">
       </div>
-      <div class="col-md-6">
-        <div id="conversation">
-          <ul id="msgs" class="list-unstyled"></ul>
-        </div>
-        <form id="chatForm" class="form-inline">
-          <div class="form-group">
-            <input type="text" class="form-control input-lg" placeholder="Your message" id="msg">
-          </div>
-          <input type="submit" name="send" id="send" value="Send" class="btn btn-success btn-lg">
-          <input type="button" name="start_button" id="start_button" value="Record" onclick="startButton(event)" class="btn btn-info btn-lg">
-          <div class="btn-group">
-            <button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" >
-              Actions <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#" name="createRoom" data-toggle="modal" data-target="#roomModal">Create room</a></li>
-              <li><a href="#" name="leave" id="leave">Leave current room</a></li>
-              <!--<li><a href="#" name="disconnect" id="disconnect">Disconnect from chat</a></li>-->
-            </ul>
-          </div>
-        </form>
+      <input type="submit" name="send" id="send" value="Send" class="btn btn-success btn-lg">
+      <input type="button" name="start_button" id="start_button" value="Record" onclick="startButton(event)" class="btn btn-info btn-lg">
+      <div class="btn-group">
+        <button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" >
+          Actions <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#" name="createRoom" data-toggle="modal" data-target="#roomModal">Create room</a></li>
+          <li><a href="#" name="leave" id="leave">Leave current room</a></li>
+          <!--<li><a href="#" name="disconnect" id="disconnect">Disconnect from chat</a></li>-->
+        </ul>
       </div>
-       <div class="col-md-2">
-        <ul class="list-unstyled" id="updates"></ul>
+    </form>
+  </div>
+  <div class="col-md-2">
+    <ul class="list-unstyled" id="updates"></ul>
+  </div>
+</div>
+<div class="row">
+
+  <form id="codeForm">
+    <select name="idLanguage" id="mode">
+      <option value="javascript">javaScript</option>
+      <option value="python">python</option>
+
+      <option value="ruby">ruby</option>
+      <option value="clojure">clojure</option>
+      <option value="clike">clike</option>
+      <option value="css">css</option>
+      <option value="markdown">markdown</option>
+      <option value="htmlmixed">htmlmixed</option>
+      <option value="xml">xml</option>
+
+    </select>
+    <select name="idTheme" id="theme">
+      <option value="vibrant-ink">vibrant-ink</option>
+      <option value="3024-day">3024-day</option>
+      <option value="3024-night">3024-night</option>
+      <option value="eclipse">eclipse</option>
+      <option value="monokai">monokai</option>
+      <option value="midnight">midnight</option>
+      <option value="night">night</option>
+      <option value="railscasts">railscasts</option>
+      <option value="solarized">solarized</option>
+      <option value="ambiance">ambiance</option>
+
+    </select>
+    <textarea title="code" id="code"></textarea>
+  </form>
+</div>
+
+<!-- Modal start -->
+<div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="createRoomLabel">Create room</h4>
+      </div>
+      <div class="modal-body">
+        You can create a chat room here. Names have to be unique.
+        <form class="form-inline" id="createRoomForm"><input type="text" class="form-control input-lg"  placeholder="Room name" id="createRoomName"></form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Close</button>
+        <button data-dismiss="modal" id="createRoomBtn" class="btn btn-success btn-lg">Create room</button>
       </div>
     </div>
   </div>
+</div>
+<!-- Modal end -->
 
-  <!-- Modal start -->
-  <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="createRoomLabel">Create room</h4>
-        </div>
-        <div class="modal-body">
-          You can create a chat room here. Names have to be unique.
-          <form class="form-inline" id="createRoomForm"><input type="text" class="form-control input-lg"  placeholder="Room name" id="createRoomName"></form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Close</button>
-          <button data-dismiss="modal" id="createRoomBtn" class="btn btn-success btn-lg">Create room</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Modal end -->
-
-  <script src="components/jquery/dist/jquery.js"></script>
-  <script src="components/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="/socket.io/socket.io.js"></script>  
-  <script src="js/client.js"></script>
+<script src="components/jquery/dist/jquery.js"></script>
+<script src="components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/client.js"></script>
 </body>
 </html>

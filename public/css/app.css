@@ -17,3 +17,13 @@
 .interim {
   font-color: #f00;
 }
+#errors{
+  display: none;
+}
+#main-chat-screen{
+  display:none;
+}
+
+#codeForm{
+  display: none;
+}
