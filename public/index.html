@@ -76,45 +76,91 @@
         </div>
       </form>
     </div>
-    <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-6">
 
-      <form id="codeForm">
-        <select name="idLanguage" id="mode">
-          <option value="javascript">javaScript</option>
-          <option value="python">python</option>
 
-          <option value="ruby">ruby</option>
-          <option value="clojure">clojure</option>
-          <option value="clike">clike</option>
-          <option value="css">css</option>
-          <option value="markdown">markdown</option>
-          <option value="htmlmixed">htmlmixed</option>
-          <option value="xml">xml</option>
+        <!-- Video area -->
 
-        </select>
-        <select name="idTheme" id="theme">
-          <option value="vibrant-ink">vibrant-ink</option>
-          <option value="3024-day">3024-day</option>
-          <option value="3024-night">3024-night</option>
-          <option value="eclipse">eclipse</option>
-          <option value="monokai">monokai</option>
-          <option value="midnight">midnight</option>
-          <option value="night">night</option>
-          <option value="railscasts">railscasts</option>
-          <option value="solarized">solarized</option>
-          <option value="ambiance">ambiance</option>
 
-        </select>
-        <textarea title="code" id="code"></textarea>
-      </form>
-      <div class="row">
-        <div class="col-md-12">
-          <iframe id=preview></iframe>
+
+
+        <!-- Steps -->
+        <h2>CodeAddict Video Chat</h2>
+
+        <!-- Get local audio/video stream -->
+        <div id="step1">
+          <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
+          <div id="step1-error">
+            <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
+            <a href="#" class="pure-button pure-button-error" id="step1-retry">Try again</a>
+          </div>
         </div>
+
+        <!-- Make calls to others -->
+        <div id="step2">
+          <p>Your id: <span id="my-id">...</span></p>
+          <p>Share this id with others so they can call you.</p>
+          <h3>Make a call</h3>
+          <div class="pure-form">
+            <input type="text" placeholder="Call user id..." id="callto-id">
+            <a href="#" class="pure-button pure-button-success" id="make-call">Call</a>
+          </div>
+        </div>
+
+        <!-- Call in progress -->
+        <div id="step3">
+          <p>Currently in call with <span id="their-id">...</span></p>
+          <p><a href="#" class="pure-button pure-button-error" id="end-call">End call</a></p>
+        </div>
+
       </div>
+      <video id="their-video" autoplay></video>
+      <video id="my-video" muted="true" autoplay></video>
+
+
+
+
+        <form id="codeForm">
+          <select name="idLanguage" id="mode">
+            <option value="javascript">javaScript</option>
+            <option value="python">python</option>
+
+            <option value="ruby">ruby</option>
+            <option value="clojure">clojure</option>
+            <option value="clike">clike</option>
+            <option value="css">css</option>
+            <option value="markdown">markdown</option>
+            <option value="htmlmixed">htmlmixed</option>
+            <option value="xml">xml</option>
+
+          </select>
+          <select name="idTheme" id="theme">
+            <option value="vibrant-ink">vibrant-ink</option>
+            <option value="3024-day">3024-day</option>
+            <option value="3024-night">3024-night</option>
+            <option value="eclipse">eclipse</option>
+            <option value="monokai">monokai</option>
+            <option value="midnight">midnight</option>
+            <option value="night">night</option>
+            <option value="railscasts">railscasts</option>
+            <option value="solarized">solarized</option>
+            <option value="ambiance">ambiance</option>
+
+          </select>
+          <textarea title="code" id="code"></textarea>
+        </form>
+        <div class="row">
+          <div class="col-md-12">
+            <iframe id=preview></iframe>
+          </div>
+        </div>
+
     </div>
   </div>
-
+  <div class="col-md-2">
+    <ul class="list-unstyled" id="updates"></ul>
+  </div>
 </div>
 <!-- Modal start -->
 <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomLabel" aria-hidden="true">
@@ -136,50 +182,10 @@
   </div>
 </div>
 <!-- Modal end -->
-<div class="col-md-2">
-  <ul class="list-unstyled" id="updates"></ul>
-</div>
 
 
-<div class="pure-g">
 
-  <!-- Video area -->
-  <div class="pure-u-2-3" id="video-container">
-    <video id="their-video" autoplay></video>
-    <video id="my-video" muted="true" autoplay></video>
-  </div>
 
-  <!-- Steps -->
-  <div class="pure-u-1-3">
-    <h2>CodeAddict Video Chat</h2>
-
-    <!-- Get local audio/video stream -->
-    <div id="step1">
-      <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
-      <div id="step1-error">
-        <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
-        <a href="#" class="pure-button pure-button-error" id="step1-retry">Try again</a>
-      </div>
-    </div>
-
-    <!-- Make calls to others -->
-    <div id="step2">
-      <p>Your id: <span id="my-id">...</span></p>
-      <p>Share this id with others so they can call you.</p>
-      <h3>Make a call</h3>
-      <div class="pure-form">
-        <input type="text" placeholder="Call user id..." id="callto-id">
-        <a href="#" class="pure-button pure-button-success" id="make-call">Call</a>
-      </div>
-    </div>
-
-    <!-- Call in progress -->
-    <div id="step3">
-      <p>Currently in call with <span id="their-id">...</span></p>
-      <p><a href="#" class="pure-button pure-button-error" id="end-call">End call</a></p>
-    </div>
-  </div>
-</div>
 
 
 
