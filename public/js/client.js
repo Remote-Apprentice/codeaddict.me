@@ -3,6 +3,74 @@
  - WebSpeech
  */
 
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+var peer = new Peer({host: 'codeaddict.me',
+    path: '/peerjs',
+    secure: true,
+    debug: 3
+});
+peer.on('open', function(){
+    $('#my-id').text(peer.id);
+});
+// Receiving a call
+peer.on('call', function(call){
+    // Answer the call automatically (instead of prompting user) for demo purposes
+    call.answer(window.localStream);
+    step3(call);
+});
+peer.on('error', function(err){
+    alert(err.message);
+    // Return to step 2 if error occurs
+    step2();
+});
+// Click handlers setup
+$(function(){
+    $('#make-call').click(function(){
+        // Initiate a call!
+        var call = peer.call($('#callto-id').val(), window.localStream);
+        step3(call);
+    });
+    $('#end-call').click(function(){
+        window.existingCall.close();
+        step2();
+    });
+    // Retry if getUserMedia fails
+    $('#step1-retry').click(function(){
+        $('#step1-error').hide();
+        step1();
+    });
+    // Get things started
+    step1();
+});
+function step1 () {
+    // Get audio/video stream
+    navigator.getUserMedia({audio: true, video: true}, function(stream){
+        // Set your video displays
+        $('#my-video').prop('src', URL.createObjectURL(stream));
+        window.localStream = stream;
+        step2();
+    }, function(){ $('#step1-error').show(); });
+}
+function step2 () {
+    $('#step1, #step3').hide();
+    $('#step2').show();
+}
+function step3 (call) {
+    // Hang up on an existing call if present
+    if (window.existingCall) {
+        window.existingCall.close();
+    }
+    // Wait for stream on the call, then set peer video display
+    call.on('stream', function(stream){
+        $('#their-video').prop('src', URL.createObjectURL(stream));
+    });
+    // UI stuff
+    window.existingCall = call;
+    $('#their-id').text(call.peer);
+    call.on('close', step2);
+    $('#step1, #step2').hide();
+    $('#step3').show();
+}
 
 //WebSpeech API
 var final_transcript = '';
@@ -205,28 +273,28 @@ $(document).ready(function() {
     });
 
 
-  /*
-   $("#msg").keypress(function(){
-   if ($("#msg").is(":focus")) {
-   if (myRoomID !== null) {
-   socket.emit("isTyping");
-   }
-   } else {
-   $("#keyboard").remove();
-   }
-   });
+    /*
+     $("#msg").keypress(function(){
+     if ($("#msg").is(":focus")) {
+     if (myRoomID !== null) {
+     socket.emit("isTyping");
+     }
+     } else {
+     $("#keyboard").remove();
+     }
+     });
 
-   socket.on("isTyping", function(data) {
-   if (data.typing) {
-   if ($("#keyboard").length === 0)
-   $("#updates").append("<li id='keyboard'><span class='text-muted'><i class='fa fa-keyboard-o'></i>" + data.person + " is typing.</li>");
-   } else {
-   socket.emit("clearMessage");
-   $("#keyboard").remove();
-   }
-   console.log(data);
-   });
-   */
+     socket.on("isTyping", function(data) {
+     if (data.typing) {
+     if ($("#keyboard").length === 0)
+     $("#updates").append("<li id='keyboard'><span class='text-muted'><i class='fa fa-keyboard-o'></i>" + data.person + " is typing.</li>");
+     } else {
+     socket.emit("clearMessage");
+     $("#keyboard").remove();
+     }
+     console.log(data);
+     });
+     */
 
     $("#showCreateRoom").click(function() {
         $("#createRoomForm").toggle();
@@ -282,54 +350,54 @@ $(document).ready(function() {
         $("#msg").val("w:"+name+":");
         $("#msg").focus();
     });
-  /*
-   $("#whisper").change(function() {
-   var peopleOnline = [];
-   if ($("#whisper").prop('checked')) {
-   console.log("checked, going to get the peeps");
-   //peopleOnline = ["Tamas", "Steve", "George"];
-   socket.emit("getOnlinePeople", function(data) {
-   $.each(data.people, function(clientid, obj) {
-   console.log(obj.name);
-   peopleOnline.push(obj.name);
-   });
-   console.log("adding typeahead")
-   $("#msg").typeahead({
-   local: peopleOnline
-   }).each(function() {
-   if ($(this).hasClass('input-lg'))
-   $(this).prev('.tt-hint').addClass('hint-lg');
-   });
-   });
+    /*
+     $("#whisper").change(function() {
+     var peopleOnline = [];
+     if ($("#whisper").prop('checked')) {
+     console.log("checked, going to get the peeps");
+     //peopleOnline = ["Tamas", "Steve", "George"];
+     socket.emit("getOnlinePeople", function(data) {
+     $.each(data.people, function(clientid, obj) {
+     console.log(obj.name);
+     peopleOnline.push(obj.name);
+     });
+     console.log("adding typeahead")
+     $("#msg").typeahead({
+     local: peopleOnline
+     }).each(function() {
+     if ($(this).hasClass('input-lg'))
+     $(this).prev('.tt-hint').addClass('hint-lg');
+     });
+     });
 
-   console.log(peopleOnline);
-   } else {
-   console.log('remove typeahead');
-   $('#msg').typeahead('destroy');
-   }
-   });
-   // $( "#whisper" ).change(function() {
-   //   var peopleOnline = [];
-   //   console.log($("#whisper").prop('checked'));
-   //   if ($("#whisper").prop('checked')) {
-   //     console.log("checked, going to get the peeps");
-   //     peopleOnline = ["Tamas", "Steve", "George"];
-   //     // socket.emit("getOnlinePeople", function(data) {
-   //     //   $.each(data.people, function(clientid, obj) {
-   //     //     console.log(obj.name);
-   //     //     peopleOnline.push(obj.name);
-   //     //   });
-   //     // });
-   //     //console.log(peopleOnline);
-   //   }
-   //   $("#msg").typeahead({
-   //         local: peopleOnline
-   //       }).each(function() {
-   //         if ($(this).hasClass('input-lg'))
-   //           $(this).prev('.tt-hint').addClass('hint-lg');
-   //       });
-   // });
-   */
+     console.log(peopleOnline);
+     } else {
+     console.log('remove typeahead');
+     $('#msg').typeahead('destroy');
+     }
+     });
+     // $( "#whisper" ).change(function() {
+     //   var peopleOnline = [];
+     //   console.log($("#whisper").prop('checked'));
+     //   if ($("#whisper").prop('checked')) {
+     //     console.log("checked, going to get the peeps");
+     //     peopleOnline = ["Tamas", "Steve", "George"];
+     //     // socket.emit("getOnlinePeople", function(data) {
+     //     //   $.each(data.people, function(clientid, obj) {
+     //     //     console.log(obj.name);
+     //     //     peopleOnline.push(obj.name);
+     //     //   });
+     //     // });
+     //     //console.log(peopleOnline);
+     //   }
+     //   $("#msg").typeahead({
+     //         local: peopleOnline
+     //       }).each(function() {
+     //         if ($(this).hasClass('input-lg'))
+     //           $(this).prev('.tt-hint').addClass('hint-lg');
+     //       });
+     // });
+     */
 
 //socket-y stuff
     socket.on('refresh', function (data) {
@@ -385,15 +453,15 @@ $(document).ready(function() {
             //peopleOnline.push(obj.name);
         });
 
-      /*var whisper = $("#whisper").prop('checked');
-       if (whisper) {
-       $("#msg").typeahead({
-       local: peopleOnline
-       }).each(function() {
-       if ($(this).hasClass('input-lg'))
-       $(this).prev('.tt-hint').addClass('hint-lg');
-       });
-       }*/
+        /*var whisper = $("#whisper").prop('checked');
+         if (whisper) {
+         $("#msg").typeahead({
+         local: peopleOnline
+         }).each(function() {
+         if ($(this).hasClass('input-lg'))
+         $(this).prev('.tt-hint').addClass('hint-lg');
+         });
+         }*/
     });
 
     socket.on("chat", function(msTime, person, msg) {

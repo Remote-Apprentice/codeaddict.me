@@ -1,6 +1,13 @@
+var fs = require('fs');
+
+var options = {
+    key: fs.readFileSync('/etc/letsencrypt/live/codeaddict.me/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/codeaddict.me/fullchain.pem')
+}
+
 var express = require('express')
     , app = express()
-    , server = require('http').createServer(app)
+    , server = require('https').createServer(options, app)
     , io = require("socket.io").listen(server)
     , uuid = require('node-uuid')
     , Room = require('./room.js')
@@ -9,8 +16,8 @@ var sanitize = require('validator');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 
-app.set('port',  4200);
-app.set('ipaddr', "127.0.0.1");
+app.set('port', 443);
+app.set('ipaddr', "codeaddict.me");
 app.use(bodyParser());
 app.use(methodOverride());
 app.use(express.static(__dirname + '/public'));
@@ -19,7 +26,6 @@ app.use('/js', express.static(__dirname + '/js'));
 app.use('/icons', express.static(__dirname + '/icons'));
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
-
 
 app.get('/', function(req, res) {
     res.render('index.html');
@@ -56,36 +62,36 @@ function findClientsSocket(roomId, namespace) {
     return res;
 }
 function purge(s, action) {
-	/*
-	 The action will determine how we deal with the room/user removal.
-	 These are the following scenarios:
-	 if the user is the owner and (s)he:
-	 1) disconnects (i.e. leaves the whole server)
-	 - advise users
-	 - delete user from people object
-	 - delete room from rooms object
-	 - delete chat history
-	 - remove all users from room that is owned by disconnecting user
-	 2) removes the room
-	 - same as above except except not removing user from the people object
-	 3) leaves the room
-	 - same as above
-	 if the user is not an owner and (s)he's in a room:
-	 1) disconnects
-	 - delete user from people object
-	 - remove user from room.people object
-	 2) removes the room
-	 - produce error message (only owners can remove rooms)
-	 3) leaves the room
-	 - same as point 1 except not removing user from the people object
-	 if the user is not an owner and not in a room:
-	 1) disconnects
-	 - same as above except not removing user from room.people object
-	 2) removes the room
-	 - produce error message (only owners can remove rooms)
-	 3) leaves the room
-	 - n/a
-	 */
+    /*
+     The action will determine how we deal with the room/user removal.
+     These are the following scenarios:
+     if the user is the owner and (s)he:
+     1) disconnects (i.e. leaves the whole server)
+     - advise users
+     - delete user from people object
+     - delete room from rooms object
+     - delete chat history
+     - remove all users from room that is owned by disconnecting user
+     2) removes the room
+     - same as above except except not removing user from the people object
+     3) leaves the room
+     - same as above
+     if the user is not an owner and (s)he's in a room:
+     1) disconnects
+     - delete user from people object
+     - remove user from room.people object
+     2) removes the room
+     - produce error message (only owners can remove rooms)
+     3) leaves the room
+     - same as point 1 except not removing user from the people object
+     if the user is not an owner and not in a room:
+     1) disconnects
+     - same as above except not removing user from room.people object
+     2) removes the room
+     - produce error message (only owners can remove rooms)
+     3) leaves the room
+     - n/a
+     */
     if (people[s.id].inroom) { //user is in a room
         var room = rooms[people[s.id].inroom]; //check which room user is in.
         if (s.id === room.owner) { //user in room and owns room
