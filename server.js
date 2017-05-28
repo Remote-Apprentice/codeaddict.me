@@ -25,7 +25,15 @@ app.use('/components', express.static(__dirname + '/components'));
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/icons', express.static(__dirname + '/icons'));
 app.set('views', __dirname + '/views');
+
 app.engine('html', require('ejs').renderFile);
+
+
+var http = require('http');
+http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(80);
 
 app.get('/', function(req, res) {
     res.render('index.html');
