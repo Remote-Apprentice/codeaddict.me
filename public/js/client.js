@@ -157,9 +157,9 @@ $(document).ready(function() {
         mode: 'javascript',
         lineNumbers: true,
         lineWrapping: true,
-        autoCloseTags: true,
+        autoCloseTags: false,
         styleActiveLine: true,
-        autoCloseBrackets: true,
+        autoCloseBrackets: false,
         theme: "vibrant-ink"
     });
 
