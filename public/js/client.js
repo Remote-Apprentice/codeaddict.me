@@ -174,6 +174,7 @@ $(document).ready(function() {
         editor.setOption("theme", $(this).val() );
     });
 
+
     function updatePreview() {
         var previewFrame = document.getElementById('preview');
         var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
@@ -312,9 +313,12 @@ $(document).ready(function() {
             } else {
                 if (roomName.length > 0) { //also check for roomname
                     socket.emit("createRoom", roomName);
+
                     $("#errors").empty();
                     $("#errors").hide();
                     $("#codeForm").show();
+                    editor.refresh();
+                    editor.focus();
                 }
             }
         });
@@ -326,6 +330,9 @@ $(document).ready(function() {
         if(socket.room == undefined){
             socket.emit("joinRoom", roomID);
             $("#codeForm").show();
+            editor.refresh();
+            editor.focus();
+
         }
 
     });
