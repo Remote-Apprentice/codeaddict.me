@@ -86,7 +86,6 @@
 
 
         <!-- Steps -->
-        <h2>CodeAddict Video Chat</h2>
 
         <!-- Get local audio/video stream -->
         <div id="step1">
@@ -99,19 +98,17 @@
 
         <!-- Make calls to others -->
         <div id="step2">
-          <p>Your id: <span id="my-id">...</span></p>
-          <p>Share this id with others so they can call you.</p>
-          <h3>Make a call</h3>
-          <div class="pure-form">
-            <input type="text" placeholder="Call user id..." id="callto-id">
-            <a href="#" class="pure-button pure-button-success" id="make-call">Call</a>
-          </div>
+          <p>Your id: <span id="my-id">...</span> <input type="text" placeholder="Call user id..." id="callto-id">
+            <a href="#" class="pure-button pure-button-success" id="make-call">Call</a></p>
+
+
+
         </div>
 
         <!-- Call in progress -->
         <div id="step3">
-          <p>Currently in call with <span id="their-id">...</span></p>
-          <p><a href="#" class="pure-button pure-button-error" id="end-call">End call</a></p>
+          <p>Currently in call with <span id="their-id">...</span> <a href="#" class="pure-button pure-button-error" id="end-call">End call</a></p>
+
         </div>
 
       </div>
@@ -121,40 +118,40 @@
 
 
 
-        <form id="codeForm">
-          <select name="idLanguage" id="mode">
-            <option value="javascript">javaScript</option>
-            <option value="python">python</option>
+      <form id="codeForm">
+        <select name="idLanguage" id="mode">
+          <option value="javascript">javaScript</option>
+          <option value="python">python</option>
 
-            <option value="ruby">ruby</option>
-            <option value="clojure">clojure</option>
-            <option value="clike">clike</option>
-            <option value="css">css</option>
-            <option value="markdown">markdown</option>
-            <option value="htmlmixed">htmlmixed</option>
-            <option value="xml">xml</option>
+          <option value="ruby">ruby</option>
+          <option value="clojure">clojure</option>
+          <option value="clike">clike</option>
+          <option value="css">css</option>
+          <option value="markdown">markdown</option>
+          <option value="htmlmixed">htmlmixed</option>
+          <option value="xml">xml</option>
 
-          </select>
-          <select name="idTheme" id="theme">
-            <option value="vibrant-ink">vibrant-ink</option>
-            <option value="3024-day">3024-day</option>
-            <option value="3024-night">3024-night</option>
-            <option value="eclipse">eclipse</option>
-            <option value="monokai">monokai</option>
-            <option value="midnight">midnight</option>
-            <option value="night">night</option>
-            <option value="railscasts">railscasts</option>
-            <option value="solarized">solarized</option>
-            <option value="ambiance">ambiance</option>
+        </select>
+        <select name="idTheme" id="theme">
+          <option value="vibrant-ink">vibrant-ink</option>
+          <option value="3024-day">3024-day</option>
+          <option value="3024-night">3024-night</option>
+          <option value="eclipse">eclipse</option>
+          <option value="monokai">monokai</option>
+          <option value="midnight">midnight</option>
+          <option value="night">night</option>
+          <option value="railscasts">railscasts</option>
+          <option value="solarized">solarized</option>
+          <option value="ambiance">ambiance</option>
 
-          </select>
-          <textarea title="code" id="code"></textarea>
-        </form>
-        <div class="row">
-          <div class="col-md-12">
-            <iframe id=preview></iframe>
-          </div>
-        </div>
+        </select>
+        <textarea title="code" id="code"></textarea>
+      </form>
+
+      <div class="col-md-12 pull-right">
+        <iframe class="pull-right" id=preview></iframe>
+      </div>
+
 
     </div>
   </div>
