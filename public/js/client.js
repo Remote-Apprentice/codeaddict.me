@@ -160,7 +160,7 @@ $(document).ready(function() {
         autoCloseTags: false,
         styleActiveLine: true,
         autoCloseBrackets: false,
-        theme: "vibrant-ink"
+        theme: "eclipse"
     });
 
     $('#mode').change(function(){

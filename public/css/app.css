@@ -10,6 +10,9 @@
   margin: 0px;
   height: 300px;
   overflow: scroll;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  padding: 5px;
 }
 .final {
   font-color: #000;
@@ -34,6 +37,7 @@ iframe {
   float: left;
   height: 300px;
   border: 1px solid black;
+
 
 }
 
@@ -73,14 +77,14 @@ iframe {
   margin-top: 15px;
   width: 280px;
   height: auto;
-  background-color: #eee;
+
 }
 
 #their-video {
   margin-top: 15px;
   width: 280px;
   height: auto;
-  background-color: #eee;
+
 }
 
 #video-container {
@@ -93,4 +97,15 @@ iframe {
 }
 #my-id {
   font-weight: bold;
+  font-size: larger;
+  color: #236d9a;
+}
+#their-id {
+  font-weight: bold;
+  font-size: larger;
+  color: #236d9a;
+}
+body{
+  background-color: #000;
+  color: #fff;
 }

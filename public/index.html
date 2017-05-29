@@ -51,11 +51,18 @@
 </div>
 <div class="container-fluid">
   <div class="row" id="main-chat-screen">
-    <div class="col-md-2">
+    <div class="col-md-2" style="color:#000;">
       <ul id="rooms" class="list-group"></ul>
       <ul id="people" class="list-group"></ul>
     </div>
     <div class="col-md-4">
+      <div class="btn-group">
+
+          <a class="btn btn-info" href="#" name="createRoom" data-toggle="modal" data-target="#roomModal">Create room</a>
+          <a class="btn btn-warning"href="#" name="leave" id="leave">Leave current room</a>
+          <!--<li><a href="#" name="disconnect" id="disconnect">Disconnect from chat</a></li>-->
+
+      </div>
       <div id="conversation">
         <ul id="msgs" class="list-unstyled"></ul>
       </div>
@@ -64,16 +71,7 @@
           <input type="text" class="form-control input-lg" placeholder="Your message" id="msg">
         </div>
         <input type="submit" name="send" id="send" value="Send" class="btn btn-success btn-lg">
-        <div class="btn-group">
-          <button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" >
-            Actions <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#" name="createRoom" data-toggle="modal" data-target="#roomModal">Create room</a></li>
-            <li><a href="#" name="leave" id="leave">Leave current room</a></li>
-            <!--<li><a href="#" name="disconnect" id="disconnect">Disconnect from chat</a></li>-->
-          </ul>
-        </div>
+
       </form>
     </div>
     <div class="row">
@@ -98,7 +96,7 @@
 
         <!-- Make calls to others -->
         <div id="step2">
-          <p>Your id: <span id="my-id">...</span> <input type="text" placeholder="Call user id..." id="callto-id">
+          <p>Your id: <span id="my-id">...</span> <input type="text" placeholder="Call user id..." id="callto-id" style="color:#000;">
             <a href="#" class="pure-button pure-button-success" id="make-call">Call</a></p>
 
 
@@ -119,7 +117,7 @@
 
 
       <form id="codeForm">
-        <select name="idLanguage" id="mode">
+        <select name="idLanguage" id="mode" style="color:#000;">
           <option value="javascript">javaScript</option>
           <option value="python">python</option>
 
@@ -132,11 +130,12 @@
           <option value="xml">xml</option>
 
         </select>
-        <select name="idTheme" id="theme">
+        <select name="idTheme" id="theme" style="color:#000;">
+          <option value="eclipse">eclipse</option>
           <option value="vibrant-ink">vibrant-ink</option>
           <option value="3024-day">3024-day</option>
           <option value="3024-night">3024-night</option>
-          <option value="eclipse">eclipse</option>
+
           <option value="monokai">monokai</option>
           <option value="midnight">midnight</option>
           <option value="night">night</option>
@@ -149,7 +148,7 @@
       </form>
 
       <div class="col-md-12 pull-right">
-        <iframe class="pull-right" id=preview></iframe>
+        <iframe class="pull-right" allowtransparency="true" style="background: #FFFFFF;" id=preview></iframe>
       </div>
 
 
@@ -160,7 +159,7 @@
   </div>
 </div>
 <!-- Modal start -->
-<div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomLabel" aria-hidden="true">
+<div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomLabel" aria-hidden="true" style="color:#000;">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
