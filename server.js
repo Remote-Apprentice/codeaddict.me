@@ -1,13 +1,6 @@
-var fs = require('fs');
-
-var options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/codeaddict.me/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/codeaddict.me/fullchain.pem')
-}
-
 var express = require('express')
     , app = express()
-    , server = require('https').createServer(options, app)
+    , server = require('http').createServer(app)
     , io = require("socket.io").listen(server)
     , uuid = require('node-uuid')
     , Room = require('./room.js')
@@ -16,7 +9,7 @@ var sanitize = require('validator');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 
-app.set('port', 443);
+app.set('port', 5000);
 app.set('ipaddr', "codeaddict.me");
 app.use(bodyParser());
 app.use(methodOverride());
@@ -28,12 +21,6 @@ app.set('views', __dirname + '/views');
 
 app.engine('html', require('ejs').renderFile);
 
-
-var http = require('http');
-http.createServer(function (req, res) {
-    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-    res.end();
-}).listen(80);
 
 app.get('/', function(req, res) {
     res.render('index.html');
