@@ -1,6 +1,6 @@
 var express = require('express')
     , app = express()
-    , server = require('http').createServer(app)
+    , server = require('https').createServer(app)
     , io = require("socket.io").listen(server)
     , uuid = require('node-uuid')
     , Room = require('./room.js')
@@ -11,7 +11,8 @@ var bodyParser = require('body-parser');
 var port = process.env.PORT || 5000;
 
 app.set('port', port);
-app.set('ipaddr', "codeaddict.me");
+app.set('host', '127.0.0.1');
+//app.set('ipaddr', "codeaddict.me");
 //app.use(bodyParser());
 //app.use(methodOverride());
 app.use(express.static(__dirname + '/public'));
@@ -27,8 +28,8 @@ app.get('/', function(req, res) {
     res.render('index.html');
 });
 
-app.listen(app.get('port'), app.get('ipaddr'), function(){
-    console.log('Express server listening on  IP: ' + app.get('ipaddr') + ' and port ' + app.get('port'));
+server.listen(app.get('port'), function(){
+
 });
 
 io.set("log level", 3);
