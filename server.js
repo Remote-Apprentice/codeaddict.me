@@ -8,7 +8,8 @@ var express = require('express')
 var sanitize = require('validator');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
-var port = process.env.PORT;
+var port = process.env.PORT || 8080;
+
 app.set('port', port);
 app.set('ipaddr', "codeaddict.me");
 app.use(bodyParser());
@@ -30,7 +31,7 @@ server.listen(app.get('port'), app.get('ipaddr'), function(){
     console.log('Express server listening on  IP: ' + app.get('ipaddr') + ' and port ' + app.get('port'));
 });
 
-io.set("log level", 1);
+io.set("log level", 3);
 var people = {};
 var rooms = {};
 var sockets = [];
