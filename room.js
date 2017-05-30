@@ -6,6 +6,7 @@ function Room(name, id, owner) {
   this.peopleLimit = 4;
   this.status = "available";
   this.private = false;
+  this.body = "";
 };
 
 Room.prototype.addPerson = function(personID) {

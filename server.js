@@ -205,8 +205,12 @@ io.sockets.on("connection", function (socket) {
     //socket.emit('refresh', {body: body});
 
     socket.on('refresh', function (body_) {
+        var room = rooms[people[socket.id].inroom];
         console.log('new body');
-        body = body_;
+        if(room){
+            room.body = body_;
+        }
+
     });
 
     socket.on('change', function (op) {
@@ -378,6 +382,7 @@ io.sockets.on("connection", function (socket) {
                         people[socket.id].inroom = id;
                         socket.room = room.name;
                         socket.join(socket.room);
+                        socket.emit('refresh', {body: room.body});
                         user = people[socket.id];
                         io.sockets.in(socket.room).emit("update", user.name + " has connected to " + room.name + " room.");
                         socket.emit("update", "Welcome to " + room.name + ".");
