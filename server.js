@@ -205,12 +205,9 @@ io.sockets.on("connection", function (socket) {
     //socket.emit('refresh', {body: body});
 
     socket.on('refresh', function (body_) {
-        var room = rooms[people[socket.id].inroom];
         console.log('new body');
-        if(room){
-            room.body = body_;
-        }
 
+        
     });
 
     socket.on('change', function (op) {
