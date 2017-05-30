@@ -8,7 +8,7 @@ var express = require('express')
 var sanitize = require('validator');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 5000;
 
 app.set('port', port);
 app.set('ipaddr', "codeaddict.me");
