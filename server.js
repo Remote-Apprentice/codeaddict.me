@@ -9,7 +9,7 @@ var sanitize = require('validator');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 
-app.set('port', 5000);
+app.set('port', 8080);
 app.set('ipaddr', "codeaddict.me");
 app.use(bodyParser());
 app.use(methodOverride());
