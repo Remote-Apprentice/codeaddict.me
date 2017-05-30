@@ -1,6 +1,6 @@
 var express = require('express')
     , app = express()
-    , server = require('https').createServer(app)
+    , server = require('http').createServer(app)
     , io = require("socket.io").listen(server)
     , uuid = require('node-uuid')
     , Room = require('./room.js')
