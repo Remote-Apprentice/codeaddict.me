@@ -1,7 +1,7 @@
 var express = require('express')
     , app = express()
-    //, server = require('http').createServer(app)
-    , io = require("socket.io").listen(app)
+    , server = require('http').createServer(app)
+    , io = require("socket.io").listen(server)
     , uuid = require('node-uuid')
     , Room = require('./room.js')
     , _ = require('underscore')._;
