@@ -1,5 +1,5 @@
 # Chat app and realtime code editor with html preview
-
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 ## Libraries used
 <ul>
   <li>node.js / npm</li>
