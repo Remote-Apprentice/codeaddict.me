@@ -12,9 +12,9 @@ var port = process.env.PORT || 5000;
 
 app.set('port', port);
 app.set('host', '127.0.0.1');
-//app.set('ipaddr', "codeaddict.me");
-//app.use(bodyParser());
-//app.use(methodOverride());
+app.set('ipaddr', "codeaddict.me");
+app.use(bodyParser());
+app.use(methodOverride());
 app.use(express.static(__dirname + '/public'));
 app.use('/components', express.static(__dirname + '/components'));
 app.use('/js', express.static(__dirname + '/js'));
