@@ -18,7 +18,9 @@
     "validator": "^7.0.0"
   },
   "devDependencies": {},
-  "scripts": {},
+  "scripts": {
+    "start": "node server.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/satrapade/advanced-chat.git"
