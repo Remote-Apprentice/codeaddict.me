@@ -1,0 +1,6 @@
+{
+  "name": "Codeaddict",
+  "description": "A barebones Node.js app using Express 4",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}
