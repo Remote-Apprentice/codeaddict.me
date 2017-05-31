@@ -60,6 +60,15 @@ function findClientsSocket(roomId, namespace) {
     }
     return res;
 }
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 function purge(s, action) {
     /*
      The action will determine how we deal with the room/user removal.
@@ -201,7 +210,7 @@ function purge(s, action) {
 }
 
 io.sockets.on("connection", function (socket) {
-
+    var color = getRandomColor();
     //socket.emit('refresh', {body: body});
 
     socket.on('refresh', function (body_) {
@@ -298,7 +307,7 @@ io.sockets.on("connection", function (socket) {
         } else {
             //console.log('loggit', io.sockets.adapter.rooms[socket.room], socket.id);
             if (io.sockets.adapter.rooms[socket.room] != undefined) {
-                io.sockets.in(socket.room).emit("chat", msTime, people[socket.id], sanitize.escape(msg));
+                io.sockets.in(socket.room).emit("chat", msTime, people[socket.id], sanitize.escape(msg), color);
                 socket.emit("isTyping", false);
                 if (_.size(chatHistory[socket.room]) > 10) {
                     chatHistory[socket.room].splice(0,1);
