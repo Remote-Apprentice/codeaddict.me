@@ -62,7 +62,7 @@ function findClientsSocket(roomId, namespace) {
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
-    var color = '#';
+    color = '#';
     for (var i = 0; i < 6; i++ ) {
         color += letters[Math.floor(Math.random() * 16)];
     }
@@ -74,6 +74,7 @@ function getRandomColor() {
 io.sockets.on("connection", function (socket) {
     //socket.emit('refresh', {body: body});
     var color = getRandomColor();
+
     socket.on('refresh', function (body) {
         var room = rooms[people[socket.id].inroom];
         if(room){
