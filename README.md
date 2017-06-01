@@ -1,4 +1,4 @@
-# Chat app and realtime code editor with html preview
+# Chat app and realtime code editor with html preview and video calls
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 ## Libraries used
 <ul>
