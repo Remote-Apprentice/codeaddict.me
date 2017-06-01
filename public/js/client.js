@@ -140,6 +140,7 @@ function zeroPad(num, size) {
     return s;
 }
 
+
 // Format the time specified in ms from 1970 into local HH:MM:SS
 function timeFormat(msTime) {
     var d = new Date(msTime);
@@ -148,11 +149,13 @@ function timeFormat(msTime) {
         zeroPad(d.getSeconds(), 2) + " ";
 }
 
+
 $(document).ready(function() {
     //setup "global" variables first
     var socket = io.connect();
     var myRoomID = null;
     var delay;
+
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         mode: 'javascript',
         lineNumbers: true,
@@ -332,6 +335,7 @@ $(document).ready(function() {
             $("#codeForm").show();
             editor.refresh();
             editor.focus();
+            socket.emit('refresh');
 
         }
 
@@ -409,13 +413,14 @@ $(document).ready(function() {
 //socket-y stuff
     socket.on('refresh', function (data) {
         editor.setValue(data);
+
     });
+
     socket.on('change', function (data) {
-        console.log(data);
         editor.replaceRange(data.text, data.from, data.to);
+
     });
     editor.on('change', function (i, op) {
-        console.log(op);
         socket.emit('change', op);
         socket.emit('refresh', editor.getValue());
         if(editor.getMode().name == 'htmlmixed'){
@@ -424,6 +429,8 @@ $(document).ready(function() {
         }
 
     });
+
+
     socket.on("exists", function(data) {
         $("#errors").empty();
         $("#errors").show();

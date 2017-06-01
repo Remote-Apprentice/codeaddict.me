@@ -69,6 +69,7 @@ function getRandomColor() {
     }
     return color;
 }
+
 function purge(s, action) {
     /*
      The action will determine how we deal with the room/user removal.
@@ -210,13 +211,14 @@ function purge(s, action) {
 }
 
 io.sockets.on("connection", function (socket) {
-    var color = getRandomColor();
     //socket.emit('refresh', {body: body});
+    var color = getRandomColor();
+    socket.on('refresh', function (body) {
+        var room = rooms[people[socket.id].inroom];
+        if(room){
+            room.body = body;
+        }
 
-    socket.on('refresh', function (body_) {
-        console.log('new body');
-
-        
     });
 
     socket.on('change', function (op) {
@@ -388,11 +390,11 @@ io.sockets.on("connection", function (socket) {
                         people[socket.id].inroom = id;
                         socket.room = room.name;
                         socket.join(socket.room);
-                        socket.emit('refresh', {body: room.body});
                         user = people[socket.id];
                         io.sockets.in(socket.room).emit("update", user.name + " has connected to " + room.name + " room.");
                         socket.emit("update", "Welcome to " + room.name + ".");
                         socket.emit("sendRoomID", {id: id});
+                        socket.emit('refresh', room.body);
                         var keys = _.keys(chatHistory);
                         if (_.contains(keys, socket.room)) {
                             socket.emit("history", chatHistory[socket.room]);
