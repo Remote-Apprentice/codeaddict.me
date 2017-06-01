@@ -7,12 +7,50 @@
   <meta http-equiv="Content-Language" content="en-us">
   <link rel="stylesheet" href="components/codemirror/lib/codemirror.css">
   <link rel="stylesheet" href="components/codemirror/theme/ambiance.css">
+  <link rel="stylesheet" href="components/codemirror/theme/ambiance-mobile.css">
+  <link rel="stylesheet" href="components/codemirror/theme/base16-dark.css">
+  <link rel="stylesheet" href="components/codemirror/theme/base16-light.css">
+  <link rel="stylesheet" href="components/codemirror/theme/bespin.css">
+  <link rel="stylesheet" href="components/codemirror/theme/blackboard.css">
+  <link rel="stylesheet" href="components/codemirror/theme/cobalt.css">
+  <link rel="stylesheet" href="components/codemirror/theme/colorforth.css">
+  <link rel="stylesheet" href="components/codemirror/theme/dracula.css">
+  <link rel="stylesheet" href="components/codemirror/theme/duotone-dark.css">
+  <link rel="stylesheet" href="components/codemirror/theme/duotone-light.css">
   <link rel="stylesheet" href="components/codemirror/theme/3024-day.css">
   <link rel="stylesheet" href="components/codemirror/theme/3024-night.css">
+  <link rel="stylesheet" href="components/codemirror/theme/abcdef.css">
   <link rel="stylesheet" href="components/codemirror/theme/eclipse.css">
+  <link rel="stylesheet" href="components/codemirror/theme/elegant.css">
+  <link rel="stylesheet" href="components/codemirror/theme/erlang-dark.css">
+  <link rel="stylesheet" href="components/codemirror/theme/hopscotch.css">
+  <link rel="stylesheet" href="components/codemirror/theme/icecoder.css">
+  <link rel="stylesheet" href="components/codemirror/theme/isotope.css">
+  <link rel="stylesheet" href="components/codemirror/theme/lesser-dark.css">
+  <link rel="stylesheet" href="components/codemirror/theme/liquibyte.css">
+  <link rel="stylesheet" href="components/codemirror/theme/material.css">
+  <link rel="stylesheet" href="components/codemirror/theme/mbo.css">
+  <link rel="stylesheet" href="components/codemirror/theme/mdn-like.css">
   <link rel="stylesheet" href="components/codemirror/theme/monokai.css">
   <link rel="stylesheet" href="components/codemirror/theme/midnight.css">
   <link rel="stylesheet" href="components/codemirror/theme/night.css">
+  <link rel="stylesheet" href="components/codemirror/theme/neat.css">
+  <link rel="stylesheet" href="components/codemirror/theme/neo.css">
+  <link rel="stylesheet" href="components/codemirror/theme/panda-syntax.css">
+  <link rel="stylesheet" href="components/codemirror/theme/paraiso-dark.css">
+  <link rel="stylesheet" href="components/codemirror/theme/paraiso-light.css">
+  <link rel="stylesheet" href="components/codemirror/theme/pastel-on-dark.css">
+  <link rel="stylesheet" href="components/codemirror/theme/rubyblue.css">
+  <link rel="stylesheet" href="components/codemirror/theme/seti.css">
+  <link rel="stylesheet" href="components/codemirror/theme/the-matrix.css">
+  <link rel="stylesheet" href="components/codemirror/theme/tomorrow-night-bright.css">
+  <link rel="stylesheet" href="components/codemirror/theme/tomorrow-night-eighties.css">
+  <link rel="stylesheet" href="components/codemirror/theme/ttcn.css">
+  <link rel="stylesheet" href="components/codemirror/theme/twilight.css">
+  <link rel="stylesheet" href="components/codemirror/theme/xq-dark.css">
+  <link rel="stylesheet" href="components/codemirror/theme/xq-light.css">
+  <link rel="stylesheet" href="components/codemirror/theme/yeti.css">
+  <link rel="stylesheet" href="components/codemirror/theme/zenburn.css">
   <link rel="stylesheet" href="components/codemirror/theme/railscasts.css">
   <link rel="stylesheet" href="components/codemirror/theme/solarized.css">
   <link rel="stylesheet" href="components/codemirror/theme/vibrant-ink.css">
@@ -30,6 +68,8 @@
   <script src="components/codemirror/mode/clojure/clojure.js"></script>
   <script src="components/codemirror/mode/ruby/ruby.js"></script>
   <script src="components/codemirror/mode/python/python.js"></script>
+  <script src="components/codemirror/mode/php/php.js"></script>
+  <script src="components/codemirror/mode/coffeescript/coffeescript.js"></script>
   <script src="components/codemirror/addon/selection/active-line.js"></script>
   <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="components/font-awesome/css/font-awesome.css">
@@ -120,9 +160,10 @@
         <select name="idLanguage" id="mode" style="color:#000;">
           <option value="javascript">javaScript</option>
           <option value="python">python</option>
-
+          <option value="php">php</option>
           <option value="ruby">ruby</option>
           <option value="clojure">clojure</option>
+          <option value="coffeescript">coffeescript</option>
           <option value="clike">clike</option>
           <option value="css">css</option>
           <option value="markdown">markdown</option>
@@ -135,13 +176,59 @@
           <option value="vibrant-ink">vibrant-ink</option>
           <option value="3024-day">3024-day</option>
           <option value="3024-night">3024-night</option>
-
           <option value="monokai">monokai</option>
           <option value="midnight">midnight</option>
           <option value="night">night</option>
           <option value="railscasts">railscasts</option>
           <option value="solarized">solarized</option>
           <option value="ambiance">ambiance</option>
+
+          <option value="abcdef">abcdef</option>
+          <option value="ambiance-mobile">ambiance-mobile</option>
+          <option value="base16-dark">base16-dark</option>
+          <option value="base16-light">base16-light</option>
+
+          <option value="bespin">bespin</option>
+          <option value="blackboard">blackboard</option>
+          <option value="cobalt">cobalt</option>
+          <option value="colorforth">colorforth</option>
+          <option value="dracula">dracula</option>
+          <option value="duotone-light">duotone-light</option>
+
+          <option value="duotone-dark">duotone-dark</option>
+          <option value="elegant">elegant</option>
+          <option value="erlang-dark">erlang-dark</option>
+          <option value="hopscotch">hopscotch</option>
+
+          <option value="icecoder">icecoder</option>
+          <option value="isotope">isotope</option>
+          <option value="lesser-dark">lesser-dark</option>
+          <option value="liquibyte">liquibyte</option>
+          <option value="material">material</option>
+          <option value="mbo">mbo</option>
+
+          <option value="mdn-like">mdn-like</option>
+          <option value="neat">neat</option>
+          <option value="neo">neo</option>
+          <option value="panda-syntax">panda-syntax</option>
+
+          <option value="paraiso-light">paraiso-light</option>
+          <option value="paraiso-dark">paraiso-dark</option>
+          <option value="pastel-on-dark">pastel-on-dark</option>
+          <option value="rubyblue">rubyblue</option>
+          <option value="seti">seti</option>
+          <option value="the-matrix">the-matrix</option>
+
+          <option value="tomorrow-night-bright">tomorrow-night-bright</option>
+          <option value="tomorrow-night-eighties">tomorrow-night-eighties</option>
+          <option value="ttcn">ttcn</option>
+          <option value="twilight">twilight</option>
+
+          <option value="xq-dark">xq-dark</option>
+          <option value="xq-light">xq-light</option>
+          <option value="yeti">yeti</option>
+          <option value="zenburn">zenburn</option>
+
 
         </select>
         <textarea title="code" id="code"></textarea>
