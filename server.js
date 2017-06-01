@@ -385,7 +385,7 @@ io.sockets.on("connection", function (socket) {
                 } else {
                     if (people[socket.id].inroom !== null) {
                         socket.emit("update", "You are already in a room ("+rooms[people[socket.id].inroom].name+"), please leave it first to join another room.");
-                    } else {
+                    } if(room.people.length < room.peopleLimit){
                         room.addPerson(socket.id);
                         people[socket.id].inroom = id;
                         socket.room = room.name;
@@ -395,6 +395,11 @@ io.sockets.on("connection", function (socket) {
                         socket.emit("update", "Welcome to " + room.name + ".");
                         socket.emit("sendRoomID", {id: id});
                         socket.emit('refresh', room.body);
+                        console.log(room.people.length);
+                    }else {
+                        socket.emit("update", "The room is full.");
+
+
                         var keys = _.keys(chatHistory);
                         if (_.contains(keys, socket.room)) {
                             socket.emit("history", chatHistory[socket.room]);
