@@ -456,17 +456,17 @@ $(document).ready(function() {
 
     socket.on("history", function(data) {
         if (data.length !== 0) {
-            $("#msgs").append("<li><strong><span class='text-warning'>Last 10 messages:</li>");
+            $("#msgs").append("<li style='border-bottom:1px solid #4d4d4d;padding:5px;'><strong><span class='text-warning'>Last 10 messages:</li>");
             $.each(data, function(data, msg) {
-                $("#msgs").append("<li><span class='text-warning'>" + msg + "</span></li>");
+                $("#msgs").append("<li style='border-bottom:1px solid #4d4d4d;padding:5px;'><span class='text-warning'>" + msg + "</span></li>");
             });
         } else {
-            $("#msgs").append("<li><strong><span class='text-warning'>No past messages in this room.</li>");
+            $("#msgs").append("<li style='border-bottom:1px solid #4d4d4d;padding:5px;'><strong><span class='text-warning'>No past messages in this room.</li>");
         }
     });
 
     socket.on("update", function(msg) {
-        $("#msgs").append("<li>" + msg + "</li>");
+        $("#msgs").append("<li style='border-bottom:1px solid #4d4d4d;padding:5px;'>" + msg + "</li>");
     });
 
     socket.on("update-people", function(data){
