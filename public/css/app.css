@@ -114,4 +114,6 @@ body{
   color:#fff !important;
   background-color: #000 !important;
 }
-
+ul li {
+  word-break: break-all;
+}

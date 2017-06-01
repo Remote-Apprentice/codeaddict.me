@@ -490,7 +490,7 @@ $(document).ready(function() {
     });
 
     socket.on("chat", function(msTime, person, msg, color) {
-        $("#msgs").append("<li><strong><span class='text-success'>" + timeFormat(msTime) + "</span></strong><span style='color:" + color + "'>" + person.name + "</span>: " + msg + "</li>");
+        $("#msgs").append("<li style='border-bottom:1px solid #4d4d4d;padding:5px;'><strong><span class='text-success'>" + timeFormat(msTime) + "</span></strong><span style='color:" + color + "'>" + person.name + "</span>: " + msg + "</li>");
         //clear typing field
         $("#"+person.name+"").remove();
         clearTimeout(timeout);
