@@ -93,26 +93,28 @@
 <div class="container-fluid">
   <div class="row" id="main-chat-screen">
     <div class="col-md-2" style="color:#000;">
+      <div class="btn-group text-center">
+
+        <a class="btn btn-info" href="#" name="createRoom" data-toggle="modal" data-target="#roomModal">Create room</a>
+        <a class="btn btn-warning"href="#" name="leave" id="leave">Leave room</a>
+        <!--<li><a href="#" name="disconnect" id="disconnect">Disconnect from chat</a></li>-->
+
+      </div>
       <ul id="rooms" class="list-group"></ul>
       <ul id="people" class="list-group"></ul>
     </div>
     <div class="col-md-4">
-      <div class="btn-group">
 
-        <a class="btn btn-info" href="#" name="createRoom" data-toggle="modal" data-target="#roomModal">Create room</a>
-        <a class="btn btn-warning"href="#" name="leave" id="leave">Leave current room</a>
-        <!--<li><a href="#" name="disconnect" id="disconnect">Disconnect from chat</a></li>-->
-
-      </div>
       <div id="conversation">
         <ul id="msgs" class="list-unstyled"></ul>
       </div>
-      <form id="chatForm" class="form-inline">
-        <div class="form-group">
+      <form id="chatForm">
+        <div class="input-group">
           <input type="text" class="form-control input-lg" placeholder="Your message" id="msg">
+          <span class="input-group-btn">
+        <button class="btn btn-success btn-lg" id="send" type="submit">Send</button>
+      </span>
         </div>
-        <input type="submit" name="send" id="send" value="Send" class="btn btn-success btn-lg">
-
       </form>
     </div>
     <div class="row">
@@ -137,8 +139,13 @@
 
         <!-- Make calls to others -->
         <div id="step2">
-          <p>Your id: <span id="my-id">...</span> <input type="text" placeholder="Call user id..." id="callto-id" style="color:#000;">
-            <a href="#" class="pure-button pure-button-success" id="make-call">Call</a></p>
+          <h3>Your id: <span id="my-id">...</span></h3>
+          <div class="input-group">
+            <input class="input-lg" type="text" placeholder="Call user id..." id="callto-id" style="color:#000;">
+
+            <button class="btn btn-success btn-lg" type="button" id="make-call">Call</button>
+
+          </div>
 
 
 
@@ -146,100 +153,98 @@
 
         <!-- Call in progress -->
         <div id="step3">
-          <p>Currently in call with <span id="their-id">...</span> <a href="#" class="pure-button pure-button-error" id="end-call">End call</a></p>
+          <h3>Currently in call with <span id="their-id">...</span></h3><button class="btn btn-danger btn-lg" type="button" id="end-call">End Call</button>
 
         </div>
-
-      </div>
-      <video id="their-video" autoplay></video>
-      <video id="my-video" muted="true" autoplay></video>
-
-
-
-
-      <form id="codeForm">
-        <select class="select2-container--default" name="idLanguage" id="mode" style="width:20%">
-          <option value="javascript">javaScript</option>
-          <option value="python">python</option>
-          <option value="php">php</option>
-          <option value="ruby">ruby</option>
-          <option value="clojure">clojure</option>
-          <option value="coffeescript">coffeescript</option>
-          <option value="clike">clike</option>
-          <option value="css">css</option>
-          <option value="markdown">markdown</option>
-          <option value="htmlmixed">htmlmixed</option>
-          <option value="xml">xml</option>
-
-        </select>
-        <select class="select2-container--default" name="idTheme" id="theme" style="width:20%">
-          <option value="eclipse">eclipse</option>
-          <option value="vibrant-ink">vibrant-ink</option>
-          <option value="3024-day">3024-day</option>
-          <option value="3024-night">3024-night</option>
-          <option value="monokai">monokai</option>
-          <option value="midnight">midnight</option>
-          <option value="night">night</option>
-          <option value="railscasts">railscasts</option>
-          <option value="solarized">solarized</option>
-          <option value="ambiance">ambiance</option>
-
-          <option value="abcdef">abcdef</option>
-          <option value="ambiance-mobile">ambiance-mobile</option>
-          <option value="base16-dark">base16-dark</option>
-          <option value="base16-light">base16-light</option>
-
-          <option value="bespin">bespin</option>
-          <option value="blackboard">blackboard</option>
-          <option value="cobalt">cobalt</option>
-          <option value="colorforth">colorforth</option>
-          <option value="dracula">dracula</option>
-          <option value="duotone-light">duotone-light</option>
-
-          <option value="duotone-dark">duotone-dark</option>
-          <option value="elegant">elegant</option>
-          <option value="erlang-dark">erlang-dark</option>
-          <option value="hopscotch">hopscotch</option>
-
-          <option value="icecoder">icecoder</option>
-          <option value="isotope">isotope</option>
-          <option value="lesser-dark">lesser-dark</option>
-          <option value="liquibyte">liquibyte</option>
-          <option value="material">material</option>
-          <option value="mbo">mbo</option>
-
-          <option value="mdn-like">mdn-like</option>
-          <option value="neat">neat</option>
-          <option value="neo">neo</option>
-          <option value="panda-syntax">panda-syntax</option>
-
-          <option value="paraiso-light">paraiso-light</option>
-          <option value="paraiso-dark">paraiso-dark</option>
-          <option value="pastel-on-dark">pastel-on-dark</option>
-          <option value="rubyblue">rubyblue</option>
-          <option value="seti">seti</option>
-          <option value="the-matrix">the-matrix</option>
-
-          <option value="tomorrow-night-bright">tomorrow-night-bright</option>
-          <option value="tomorrow-night-eighties">tomorrow-night-eighties</option>
-          <option value="ttcn">ttcn</option>
-          <option value="twilight">twilight</option>
-
-          <option value="xq-dark">xq-dark</option>
-          <option value="xq-light">xq-light</option>
-          <option value="yeti">yeti</option>
-          <option value="zenburn">zenburn</option>
-
-
-        </select>
-        <textarea title="code" id="code"></textarea>
-      </form>
-
-      <div class="col-md-12 pull-right">
-        <iframe class="pull-right" allowtransparency="true" style="background: #FFFFFF;" id=preview></iframe>
+        <video id="their-video" autoplay></video>
+        <video id="my-video" muted="true" autoplay></video>
       </div>
 
 
+
+
+      <div class="col-md-12" style="margin:25px;">
+        <form id="codeForm">
+          <select class="select2-container--default" name="idLanguage" id="mode" style="width:20%">
+            <option value="javascript">javaScript</option>
+            <option value="python">python</option>
+            <option value="php">php</option>
+            <option value="ruby">ruby</option>
+            <option value="clojure">clojure</option>
+            <option value="coffeescript">coffeescript</option>
+            <option value="clike">clike</option>
+            <option value="css">css</option>
+            <option value="markdown">markdown</option>
+            <option value="htmlmixed">htmlmixed</option>
+            <option value="xml">xml</option>
+
+          </select>
+          <select class="select2-container--default" name="idTheme" id="theme" style="width:20%">
+            <option value="eclipse">eclipse</option>
+            <option value="vibrant-ink">vibrant-ink</option>
+            <option value="3024-day">3024-day</option>
+            <option value="3024-night">3024-night</option>
+            <option value="monokai">monokai</option>
+            <option value="midnight">midnight</option>
+            <option value="night">night</option>
+            <option value="railscasts">railscasts</option>
+            <option value="solarized">solarized</option>
+            <option value="ambiance">ambiance</option>
+
+            <option value="abcdef">abcdef</option>
+            <option value="ambiance-mobile">ambiance-mobile</option>
+            <option value="base16-dark">base16-dark</option>
+            <option value="base16-light">base16-light</option>
+
+            <option value="bespin">bespin</option>
+            <option value="blackboard">blackboard</option>
+            <option value="cobalt">cobalt</option>
+            <option value="colorforth">colorforth</option>
+            <option value="dracula">dracula</option>
+            <option value="duotone-light">duotone-light</option>
+
+            <option value="duotone-dark">duotone-dark</option>
+            <option value="elegant">elegant</option>
+            <option value="erlang-dark">erlang-dark</option>
+            <option value="hopscotch">hopscotch</option>
+
+            <option value="icecoder">icecoder</option>
+            <option value="isotope">isotope</option>
+            <option value="lesser-dark">lesser-dark</option>
+            <option value="liquibyte">liquibyte</option>
+            <option value="material">material</option>
+            <option value="mbo">mbo</option>
+
+            <option value="mdn-like">mdn-like</option>
+            <option value="neat">neat</option>
+            <option value="neo">neo</option>
+            <option value="panda-syntax">panda-syntax</option>
+
+            <option value="paraiso-light">paraiso-light</option>
+            <option value="paraiso-dark">paraiso-dark</option>
+            <option value="pastel-on-dark">pastel-on-dark</option>
+            <option value="rubyblue">rubyblue</option>
+            <option value="seti">seti</option>
+            <option value="the-matrix">the-matrix</option>
+
+            <option value="tomorrow-night-bright">tomorrow-night-bright</option>
+            <option value="tomorrow-night-eighties">tomorrow-night-eighties</option>
+            <option value="ttcn">ttcn</option>
+            <option value="twilight">twilight</option>
+
+            <option value="xq-dark">xq-dark</option>
+            <option value="xq-light">xq-light</option>
+            <option value="yeti">yeti</option>
+            <option value="zenburn">zenburn</option>
+
+
+          </select>
+          <textarea title="code" id="code"></textarea>
+        </form>
+
+        <iframe allowtransparency="true" style="background: #FFFFFF;" id=preview></iframe>
+
+      </div>
     </div>
   </div>
   <div class="col-md-2">
