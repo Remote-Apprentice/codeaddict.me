@@ -151,6 +151,17 @@ function timeFormat(msTime) {
 
 
 $(document).ready(function() {
+
+    $('#mode').select2({
+        placeholder: "Select a language",
+        minimumResultsForSearch: Infinity,
+        theme: "classic"
+    });
+    $('#theme').select2({
+        placeholder: "Select a theme",
+        minimumResultsForSearch: Infinity,
+        theme: "classic"
+    });
     //setup "global" variables first
     var socket = io.connect();
     var myRoomID = null;

@@ -6,7 +6,8 @@
     "jquery": "latest",
     "typeahead.js": "latest",
     "font-awesome": "latest",
-    "codemirror": "latest"
+    "codemirror": "latest",
+    "select2": "latest"
   },
   "directory": "components",
   "homepage": "https://github.com/tamaspiros/advanced-chat",
