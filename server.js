@@ -117,8 +117,8 @@ io.sockets.on("connection", function (socket) {
             socket.emit("exists", {msg: "The username already exists, please pick another one.", proposedName: proposedName});
         } else {
             people[socket.id] = {"name" : clean_name, "owns" : ownerRoomID, "inroom": inRoomID, "device": device};
-            socket.emit("update", "<span style='color: red !important;'>You have connected to the server.</span>");
-            io.sockets.emit("update", "<span style='color:" + color + " !important;'>" +people[socket.id].name + "</span><span style='color: red !important;'> is online.</span>")
+            socket.emit("update", "<span style='color: #5b82b1 !important;'>You have connected to the server.</span>");
+            io.sockets.emit("update", "<span style='color:" + color + " !important;'>" +people[socket.id].name + "</span><span style='color: #5b82b1 !important;'> is online.</span>")
             sizePeople = _.size(people);
             sizeRooms = _.size(rooms);
             io.sockets.emit("update-people", {people: people, count: sizePeople});
@@ -154,7 +154,7 @@ io.sockets.on("connection", function (socket) {
                         var whisperId = keys[i];
                         found = true;
                         if (socket.id === whisperId) { //can't whisper to ourselves
-                            socket.emit("update", "<span style='color: red !important;'>You can't whisper to yourself.</span>");
+                            socket.emit("update", "<span style='color: #5b82b1 !important;'>You can't whisper to yourself.</span>");
                         }
                         break;
                     }
@@ -166,7 +166,7 @@ io.sockets.on("connection", function (socket) {
                 socket.emit("whisper", msTime, {name: "You ", to: people[whisperId].name}, whisperMsg);
                 io.sockets.connected[whisperId].emit("whisper", msTime, people[socket.id], whisperMsg);
             } else {
-                socket.emit("update", "<span style='color: red !important;'>Can't find </span><span style='color:" + color + " !important;'>" + whisperTo + "</span>");
+                socket.emit("update", "<span style='color: #5b82b1 !important;'>Can't find </span><span style='color:" + color + " !important;'>" + whisperTo + "</span>");
             }
         } else {
             //console.log('loggit', io.sockets.adapter.rooms[socket.room], socket.id);
@@ -181,7 +181,7 @@ io.sockets.on("connection", function (socket) {
                     }
                 }
             } else {
-                socket.emit("update", "<span style='color: red !important;'>Please connect to a room.</span>");
+                socket.emit("update", "<span style='color: #5b82b1 !important;'>Please connect to a room.</span>");
             }
         }
     });
@@ -193,11 +193,9 @@ io.sockets.on("connection", function (socket) {
     });
 
     //Room functions
-
-    //Room functions
     socket.on("createRoom", function({roomName, peopleLimit}) {
         if (people[socket.id].inroom) {
-            socket.emit("update", "<span style='color: red !important;'>You are in</span> <span style='color:" + color + " !important;'>" + room.name + "</span><span style='color: red !important;'>. Please leave it first to create your own.</span>");
+            socket.emit("update", "<span style='color: #5b82b1 !important;'>You are in</span> <span style='color:" + color + " !important;'>" + room.name + "</span><span style='color: #5b82b1 !important;'>. Please leave it first to create your own.</span>");
         } else if (!people[socket.id].owns) {
             var id = uuid.v4();
             var clean_name = sanitize.escape(roomName);
@@ -212,14 +210,13 @@ io.sockets.on("connection", function (socket) {
             people[socket.id].owns = id;
             people[socket.id].inroom = id;
             room.addPerson(socket.id);
-            socket.emit("update", "<span style='color: red !important;'>Welcome to </span><span style='color:" + color + " !important;'>" + room.name + "</span><span style='color: red !important;'>.</span>");
+            socket.emit("update", "<span style='color: #5b82b1 !important;'>Welcome to </span><span style='color:" + color + " !important;'>" + room.name + "</span><span style='color: #5b82b1 !important;'>.</span>");
             socket.emit("sendRoomID", {id: id});
             chatHistory[socket.room] = [];
         } else {
-            socket.emit("update", "<span style='color: red !important;'>You have already created a room.</span>");
+            socket.emit("update", "<span style='color: #5b82b1 !important;'>You have already created a room.</span>");
         }
     });
-
 
     socket.on("check", function(name, fn) {
         var match = false;
@@ -235,7 +232,7 @@ io.sockets.on("connection", function (socket) {
         if (socket.id === room.owner) {
             purge(socket, "removeRoom");
         } else {
-            socket.emit("update", "<span style='color: red !important;'>Only the owner can remove a room.</span>");
+            socket.emit("update", "<span style='color: #5b82b1 !important;'>Only the owner can remove a room.</span>");
         }
     });
 
@@ -243,21 +240,21 @@ io.sockets.on("connection", function (socket) {
         if (typeof people[socket.id] !== "undefined") {
             var room = rooms[id];
             if (socket.id === room.owner) {
-                socket.emit("update", "<span style='color: red !important;'>You are the owner of this room and you have already been joined.</span>");
+                socket.emit("update", "<span style='color: #5b82b1 !important;'>You are the owner of this room and you have already been joined.</span>");
             } else {
                 if (_.contains((room.people), socket.id)) {
-                    socket.emit("update", "<span style='color: red !important;'>You have already joined this room.</span>");
+                    socket.emit("update", "<span style='color: #5b82b1 !important;'>You have already joined this room.</span>");
                 } else {
                     if (people[socket.id].inroom !== null) {
-                        socket.emit("update", "<span style='color: red !important;'>You are already in a room (</span><span style='color:" + color + " !important;'>" +rooms[people[socket.id].inroom].name+"</span><span style='color: red !important;'>), please leave it first to join another room.</span>");
+                        socket.emit("update", "<span style='color: #5b82b1 !important;'>You are already in a room (</span><span style='color:" + color + " !important;'>" +rooms[people[socket.id].inroom].name+"</span><span style='color: #5b82b1 !important;'>), please leave it first to join another room.</span>");
                     } if(room.people.length < room.peopleLimit){
                         room.addPerson(socket.id);
                         people[socket.id].inroom = id;
                         socket.room = room.name;
                         socket.join(socket.room);
                         user = people[socket.id];
-                        io.sockets.in(socket.room).emit("update", "<span style='color:" + color + " !important;'>" +user.name + "</span><span style='color: red !important;'> has connected to </span><span style='color:" + color + " !important;'>" + room.name + "</span>");
-                        socket.emit("update", "<span style='color: red !important;'>Welcome to </span><span style='color:" + color + " !important;'>" + room.name + "</span><span style='color: red !important;'>.</span>");
+                        io.sockets.in(socket.room).emit("update", "<span style='color:" + color + " !important;'>" +user.name + "</span><span style='color: #5b82b1 !important;'> has connected to </span><span style='color:" + color + " !important;'>" + room.name + "</span>");
+                        socket.emit("update", "<span style='color: #5b82b1 !important;'>Welcome to </span><span style='color:" + color + " !important;'>" + room.name + "</span><span style='color: #5b82b1 !important;'>.</span>");
                         socket.emit("sendRoomID", {id: id});
                         socket.emit('refresh', room.body);
                         console.log(room.people.length);
@@ -266,7 +263,7 @@ io.sockets.on("connection", function (socket) {
                             socket.emit("history", chatHistory[socket.room]);
                         }
                     }else {
-                        socket.emit("update", "<span style='color: red !important;'>The room is full.</span>");
+                        socket.emit("update", "<span style='color: #5b82b1 !important;'>The room is full.</span>");
 
 
 
@@ -274,7 +271,7 @@ io.sockets.on("connection", function (socket) {
                 }
             }
         } else {
-            socket.emit("update", "<span style='color: red !important;'>Please enter a valid name first.</span>");
+            socket.emit("update", "<span style='color: #5b82b1 !important;'>Please enter a valid name first.</span>");
         }
     });
 
@@ -319,7 +316,7 @@ io.sockets.on("connection", function (socket) {
             var room = rooms[people[s.id].inroom]; //check which room user is in.
             if (s.id === room.owner) { //user in room and owns room
                 if (action === "disconnect") {
-                    io.sockets.in(s.room).emit("update", "<span style='color: red !important;'>The owner (</span><span style='color:" + color + " !important;'>" +people[s.id].name + "</span><span style='color: red !important;'>) has left the server. The room is removed and you have been disconnected from it as well.</span>");
+                    io.sockets.in(s.room).emit("update", "<span style='color: #5b82b1 !important;'>The owner (</span><span style='color:" + color + " !important;'>" +people[s.id].name + "</span><span style='color: #5b82b1 !important;'>) has left the server. The room is removed and you have been disconnected from it as well.</span>");
                     var socketids = [];
                     for (var i=0; i<sockets.length; i++) {
                         socketids.push(sockets[i].id);
@@ -344,7 +341,7 @@ io.sockets.on("connection", function (socket) {
                     var o = _.findWhere(sockets, {'id': s.id});
                     sockets = _.without(sockets, o);
                 } else if (action === "removeRoom") { //room owner removes room
-                    io.sockets.in(s.room).emit("update", "<span style='color: red !important;'>The owner (</span><span style='color:" + color + " !important;'>" +people[s.id].name + "</span><span style='color: red !important;'>) has removed the room. The room is removed and you have been disconnected from it as well.</span>");
+                    io.sockets.in(s.room).emit("update", "<span style='color: #5b82b1 !important;'>The owner (</span><span style='color:" + color + " !important;'>" +people[s.id].name + "</span><span style='color: #5b82b1 !important;'>) has removed the room. The room is removed and you have been disconnected from it as well.</span>");
                     var socketids = [];
                     for (var i=0; i<sockets.length; i++) {
                         socketids.push(sockets[i].id);
@@ -365,7 +362,7 @@ io.sockets.on("connection", function (socket) {
                     sizeRooms = _.size(rooms);
                     io.sockets.emit("roomList", {rooms: rooms, count: sizeRooms});
                 } else if (action === "leaveRoom") { //room owner leaves room
-                    io.sockets.in(s.room).emit("update", "<span style='color: red !important;'>The owner (</span><span style='color:" + color + " !important;'>" +people[s.id].name + "</span><span style='color: red !important;'>) has left the room. The room is removed and you have been disconnected from it as well.</span>");
+                    io.sockets.in(s.room).emit("update", "<span style='color: #5b82b1 !important;'>The owner (</span><span style='color:" + color + " !important;'>" +people[s.id].name + "</span><span style='color: #5b82b1 !important;'>) has left the room. The room is removed and you have been disconnected from it as well.</span>");
                     var socketids = [];
                     for (var i=0; i<sockets.length; i++) {
                         socketids.push(sockets[i].id);
@@ -388,7 +385,7 @@ io.sockets.on("connection", function (socket) {
                 }
             } else {//user in room but does not own room
                 if (action === "disconnect") {
-                    io.sockets.emit("update", "<span style='color:" + color + " !important;'>" + people[s.id].name + "</span> <span style='color: red !important;'>has disconnected from the server.</span>");
+                    io.sockets.emit("update", "<span style='color:" + color + " !important;'>" + people[s.id].name + "</span> <span style='color: #5b82b1 !important;'>has disconnected from the server.</span>");
                     if (_.contains((room.people), s.id)) {
                         var personIndex = room.people.indexOf(s.id);
                         room.people.splice(personIndex, 1);
@@ -400,13 +397,13 @@ io.sockets.on("connection", function (socket) {
                     var o = _.findWhere(sockets, {'id': s.id});
                     sockets = _.without(sockets, o);
                 } else if (action === "removeRoom") {
-                    s.emit("update", "<span style='color: red !important;'>Only the owner can remove a room.</span>");
+                    s.emit("update", "<span style='color: #5b82b1 !important;'>Only the owner can remove a room.</span>");
                 } else if (action === "leaveRoom") {
                     if (_.contains((room.people), s.id)) {
                         var personIndex = room.people.indexOf(s.id);
                         room.people.splice(personIndex, 1);
                         people[s.id].inroom = null;
-                        io.sockets.emit("update", "<span style='color:" + color + " !important;'>" +people[s.id].name + "</span><span style='color: red !important;'> has left the room.</span>");
+                        io.sockets.emit("update", "<span style='color:" + color + " !important;'>" +people[s.id].name + "</span><span style='color: #5b82b1 !important;'> has left the room.</span>");
                         s.leave(room.name);
                     }
                 }
@@ -414,7 +411,7 @@ io.sockets.on("connection", function (socket) {
         } else {
             //The user isn't in a room, but maybe he just disconnected, handle the scenario:
             if (action === "disconnect") {
-                io.sockets.emit("update", "<span style='color:" + color + " !important;'>" +people[s.id].name + "</span> <span style='color: red !important;'>has disconnected from the server.</span>");
+                io.sockets.emit("update", "<span style='color:" + color + " !important;'>" +people[s.id].name + "</span> <span style='color: #5b82b1 !important;'>has disconnected from the server.</span>");
                 delete people[s.id];
                 sizePeople = _.size(people);
                 io.sockets.emit("update-people", {people: people, count: sizePeople});
@@ -424,4 +421,3 @@ io.sockets.on("connection", function (socket) {
         }
     }
 });
-
