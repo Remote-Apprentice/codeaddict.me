@@ -473,9 +473,9 @@ $(document).ready(function() {
     socket.on("update-people", function(data){
         //var peopleOnline = [];
         $("#people").empty();
-        $('#people').append("<li class=\"list-group-item active\">People online <span class=\"badge\">"+data.count+"</span></li>");
+        $('#people').append("<li style='border-bottom:1px solid #4d4d4d;padding:5px;color:#236d9a;list-style: none;'>People online <span class=\"badge\">"+data.count+"</span></li>");
         $.each(data.people, function(a, obj) {
-            $('#people').append("<li class=\"list-group-item\"><span>" + obj.name + "</span> <i class=\"fa fa-"+obj.device+"\"></i> <a href=\"#\" class=\"whisper btn btn-xs\">whisper</a></li>");
+            $('#people').append("<li style='border-bottom:1px solid #4d4d4d;padding:5px;color:#fff;list-style: none;'><span>" + obj.name + "</span> <i class=\"fa fa-"+obj.device+"\"></i> <a href=\"#\" class=\"whisper btn btn-xs\">whisper</a></li>");
             //peopleOnline.push(obj.name);
         });
 
@@ -509,14 +509,14 @@ $(document).ready(function() {
 
     socket.on("roomList", function(data) {
         $("#rooms").text("");
-        $("#rooms").append("<li class=\"list-group-item active\">List of rooms <span class=\"badge\">"+data.count+"</span></li>");
+        $("#rooms").append("<li style='border-bottom:1px solid #4d4d4d;padding:5px;color:#236d9a;list-style: none;'>List of rooms <span class=\"badge\">"+data.count+"</span></li>");
         if (!jQuery.isEmptyObject(data.rooms)) {
             $.each(data.rooms, function(id, room) {
                 var html = "<button id="+id+" class='joinRoomBtn btn btn-default btn-xs' >Join</button>" + " " + "<button id="+id+" class='removeRoomBtn btn btn-default btn-xs'>Remove</button>";
-                $('#rooms').append("<li id="+id+" class=\"list-group-item\"><span>" + room.name + "</span> " + html + "</li>");
+                $('#rooms').append("<li id="+id+" style='border-bottom:1px solid #4d4d4d;padding:5px;color:#fff;list-style: none;'><span>" + room.name + "</span> " + html + "</li>");
             });
         } else {
-            $("#rooms").append("<li class=\"list-group-item\">There are no rooms yet.</li>");
+            $("#rooms").append("<li style='border-bottom:1px solid #4d4d4d;padding:5px;color:#fff;list-style: none;'>There are no rooms yet.</li>");
         }
     });
 
