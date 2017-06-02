@@ -261,7 +261,10 @@
       </div>
       <div class="modal-body">
         You can create a chat room here. Names have to be unique.
-        <form class="form-inline" id="createRoomForm"><input type="text" class="form-control input-lg"  placeholder="Room name" id="createRoomName"></form>
+        <form class="form-inline" id="createRoomForm">
+          <input type="text" class="form-control input-lg"  placeholder="Room name" id="createRoomName">
+          <label for="peopleLimit"># of People</label><input type="number" class="form-control input-lg"  placeholder="People limit" id="peopleLimit" value="2" min="2" >
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Close</button>

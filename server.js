@@ -193,18 +193,20 @@ io.sockets.on("connection", function (socket) {
     });
 
     //Room functions
-    socket.on("createRoom", function(name) {
+
+    //Room functions
+    socket.on("createRoom", function({roomName, peopleLimit}) {
         if (people[socket.id].inroom) {
             socket.emit("update", "<span style='color: red !important;'>You are in</span> <span style='color:" + color + " !important;'>" + room.name + "</span><span style='color: red !important;'>. Please leave it first to create your own.</span>");
         } else if (!people[socket.id].owns) {
             var id = uuid.v4();
-            var clean_name = sanitize.escape(name);
+            var clean_name = sanitize.escape(roomName);
             var room = new Room(clean_name, id, socket.id);
             rooms[id] = room;
             sizeRooms = _.size(rooms);
             io.sockets.emit("roomList", {rooms: rooms, count: sizeRooms});
             //add room to socket, and auto join the creator of the room
-
+            room.peopleLimit = peopleLimit;
             socket.room = clean_name;
             socket.join(socket.room);
             people[socket.id].owns = id;
@@ -217,6 +219,7 @@ io.sockets.on("connection", function (socket) {
             socket.emit("update", "<span style='color: red !important;'>You have already created a room.</span>");
         }
     });
+
 
     socket.on("check", function(name, fn) {
         var match = false;

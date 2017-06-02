@@ -318,6 +318,7 @@ $(document).ready(function() {
     $("#createRoomBtn").click(function() {
         var roomExists = false;
         var roomName = $("#createRoomName").val();
+        var peopleLimit = $("#peopleLimit").val();
         socket.emit("check", roomName, function(data) {
             roomExists = data.result;
             if (roomExists) {
@@ -326,7 +327,7 @@ $(document).ready(function() {
                 $("#errors").append("Room <i>" + roomName + "</i> already exists");
             } else {
                 if (roomName.length > 0) { //also check for roomname
-                    socket.emit("createRoom", roomName);
+                    socket.emit("createRoom", {roomName, peopleLimit});
 
                     $("#errors").empty();
                     $("#errors").hide();
